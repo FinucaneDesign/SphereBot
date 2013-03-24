@@ -51,10 +51,12 @@
  * Other Configuration
  */
 
-#define DEFAULT_PEN_UP_POSITION 50
-#define XAXIS_MIN_STEPCOUNT -467
-#define XAXIS_MAX_STEPCOUNT 467
-#define DEFAULT_ZOOM_FACTOR 1. // With a Zoom-Faktor of .65, I can print gcode for Makerbot Unicorn without changes. 
+#define DEFAULT_PEN_UP_POSITION 25
+#define XAXIS_MIN_STEPCOUNT 0
+#define XAXIS_MAX_STEPCOUNT 0
+#define YAXIS_MIN_STEPCOUNT 0
+#define YAXIS_MAX_STEPCOUNT 0
+#define DEFAULT_ZOOM_FACTOR 0.1 // With a Zoom-Faktor of .65, I can print gcode for Makerbot Unicorn without changes. 
                                // The zoom factor can be also manipulated by the propretiary code M402
 
 
@@ -63,7 +65,7 @@
 StepperModel xAxisStepper(XAXIS_DIR_PIN, XAXIS_STEP_PIN, XAXIS_ENABLE_PIN, XAXIS_ENDSTOP_PIN,
         XAXIS_MIN_STEPCOUNT, XAXIS_MAX_STEPCOUNT, 200.0, 16);
 StepperModel rotationStepper(YAXIS_DIR_PIN, YAXIS_STEP_PIN, YAXIS_ENABLE_PIN, YAXIS_ENDSTOP_PIN,
-        0, 0, 200.0, 16);
+        YAXIS_MIN_STEPCOUNT, YAXIS_MAX_STEPCOUNT, 400.0, 16);
 
 SoftwareServo servo;
 boolean servoEnabled=true;
@@ -85,10 +87,10 @@ boolean comment_mode = false;
 double currentOffsetX = 0.;
 double currentOffsetY = 0.;
 boolean absoluteMode = true;
-double feedrate = 2000.; // mm/minute
+double feedrate = 1500.; // mm/minute
 double zoom = DEFAULT_ZOOM_FACTOR;
 
-const double maxFeedrate = 6000.;
+const double maxFeedrate = 5000.;
 // ------
 
 void setup()

@@ -16,7 +16,8 @@
  */
  
 #include "StepperModel.h"
-#include "WProgram.h"
+#include "Arduino.h"
+//#include <Arduino.h>                                                                                                                                                
 
 
 /*
@@ -49,14 +50,17 @@ StepperModel::StepperModel(int inDirPin, int inStepPin, int inEnablePin, int inE
   currentStepcount=0;
   targetStepcount=0;
 
-  steps_per_mm = (int)((kStepsPerRevolution/(45.*M_PI))*kMicroStepping+0.5); // default value for a "normal" egg (45 mm diameter)
+  //steps_per_mm = (int)((kStepsPerRevolution/(45.*M_PI))*kMicroStepping+0.5); // default value for a "normal" egg (45 mm diameter)
+  steps_per_mm = (int)(0.175*kStepsPerRevolution); 
   enableStepper(false);
 }
 
 void StepperModel::resetSteppersForObjectDiameter(double diameter)
 {
   // Calculate the motor steps required to move per mm.
-  steps_per_mm = (int)((kStepsPerRevolution/(diameter*M_PI))*kMicroStepping+0.5);
+  //steps_per_mm = (int)((kStepsPerRevolution/(diameter*M_PI))*kMicroStepping+0.5);
+  steps_per_mm = (int)(0.175*kStepsPerRevolution);  
+  
   if(endStopPin>=0)
   {
 #ifdef AUTO_HOMING

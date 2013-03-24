@@ -1,3 +1,13 @@
+v0.2
+Updated by Patrick finucane (Finucane Engineering LLC)
+
+This update matches the fireware to Arduino Uno running on 1.0.1.
+
+GCODE works the same.
+
+I matched the steps per mm to the InkScape unicorn plug-in outpull.  
+
+
 v0.1
 
 This is the firmware for an EggBot-style SphereBot.
