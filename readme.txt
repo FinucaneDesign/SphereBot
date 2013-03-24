@@ -5,7 +5,11 @@ This update matches the fireware to Arduino Uno running on 1.0.1.
 
 GCODE works the same.
 
-I matched the steps per mm to the InkScape unicorn plug-in outpull.  
+I matched the steps per mm to the InkScape unicorn plug-in output.  This still needs a little work.  The orginal eggbot
+uses 800px by 3200px, with the X-axis as the 3200px direction.  But the unicorn plugin outputs in mm.  With the 3200px 
+matching about 902.3 mm.  
+
+The next update will match the units a little better.
 
 
 v0.1
