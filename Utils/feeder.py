@@ -11,10 +11,12 @@
 
 
 # Configure:
-BAUDRATE = 57600
-DEVICE = "/dev/ttyUSB1"
-DEVICE = "/dev/tty.PL2303-00001004"
-DEVICE = "/dev/tty.PL2303-00004006"
+BAUDRATE = 115200
+DEVICE = "COM4"
+#DEVICE = "/dev/tty.PL2303-00001004"
+#DEVICE = "/dev/tty.PL2303-00004006"
+TIMEOUT = 10
+STARTUPDELAY = 5
 
 # End configuration
 
@@ -23,6 +25,7 @@ DEVICE = "/dev/tty.PL2303-00004006"
 import sys
 import serial
 import re
+import time
 from optparse import OptionParser
 
 def y_displacement(x):
@@ -98,13 +101,25 @@ fileToFeed = args[0]
 gcode = open(fileToFeed, "r")
 
 if options.wantToSend:
-    sphereBot = serial.Serial(DEVICE, BAUDRATE, timeout=30)
+    print "Creating serial connection, timeout set to ", TIMEOUT, " seconds"
+    sphereBot = serial.Serial(DEVICE, BAUDRATE, timeout=TIMEOUT)
+    print "Please wait ", STARTUPDELAY, " seconds for Arduino to reset"
+    time.sleep(STARTUPDELAY) #Creating a serial connection resets the Arduino, need to wait before sending first line or it will timeout
 
 currentLine = 0.0
 lines = gcode.readlines()
 totalLines = len(lines)
+
+print "Read ", totalLines, " lines from file"
+
 for line in lines:
     currentLine = currentLine + 1
+
+    if currentLine == 1:
+        print "First line might timeout on an Arduino with auto reset, increase the startup delay time. Will continue after timeout in ", TIMEOUT, " seconds"
+    
+    print "Working on line ", currentLine, " of ", totalLines
+
 
     print line, "({0:.1f}%)".format((currentLine / totalLines)*100),
 
@@ -117,9 +132,19 @@ for line in lines:
 
     if options.wantToSend:
         sphereBot.write(line)
-
-        response = sphereBot.readline()
-        while response[:3] != "ok:":
-            print "  ", response,
-            response = sphereBot.readline()
+        print "Data sent"
+	                
+        numOfLines = 0 #Counter to count the number of lines serial.readline() reads.
+        
+        while True: #Do forever
+            #readline() blocks until we see \n or it times out
+            response = sphereBot.readline() #Read data from the serial port
+            print("Received data: "+ response) #Print out line read
+            if (response[:3] == "ok:"):
+                #print "Seen ok:, breaking out of loop"
+                break
+            
+            #Incase we don't see an ok: from the Arduino this should breakout after a timeout
+            #print "Seen timeout, breaking out of loop"
+            break  #Break out of loop
 
