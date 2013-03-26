@@ -56,7 +56,7 @@
 #define XAXIS_MAX_STEPCOUNT 0
 #define YAXIS_MIN_STEPCOUNT 0
 #define YAXIS_MAX_STEPCOUNT 0
-#define DEFAULT_ZOOM_FACTOR 0.1 // With a Zoom-Faktor of .65, I can print gcode for Makerbot Unicorn without changes. 
+#define DEFAULT_ZOOM_FACTOR 1.0 // Zoom factor based on 1 px = 1 step gcode must be in px aka step (not mm) 
                                // The zoom factor can be also manipulated by the propretiary code M402
 
 

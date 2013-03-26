@@ -51,7 +51,8 @@ StepperModel::StepperModel(int inDirPin, int inStepPin, int inEnablePin, int inE
   targetStepcount=0;
 
   //steps_per_mm = (int)((kStepsPerRevolution/(45.*M_PI))*kMicroStepping+0.5); // default value for a "normal" egg (45 mm diameter)
-  steps_per_mm = (int)(0.175*kStepsPerRevolution); 
+  
+  steps_per_mm = (int)(kStepsPerRevolution/200); 
   enableStepper(false);
 }
 
@@ -59,7 +60,8 @@ void StepperModel::resetSteppersForObjectDiameter(double diameter)
 {
   // Calculate the motor steps required to move per mm.
   //steps_per_mm = (int)((kStepsPerRevolution/(diameter*M_PI))*kMicroStepping+0.5);
-  steps_per_mm = (int)(0.175*kStepsPerRevolution);  
+  // Assuming the gcode is in px (aka steps)  But if one motor is 400 step per rev we need 2 steps per
+  steps_per_mm = (int)(kStepsPerRevolution/200);  
   
   if(endStopPin>=0)
   {
