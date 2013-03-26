@@ -24,6 +24,8 @@
  * !!!!!!!!
  */
 
+// NOTE THIS IS SET UP FOR ONE 0.9 DEGREE STEPPER (THAT ISN'T STANDARD)
+
 #include <TimerOne.h>
 #include <SoftwareServo.h>
 #include "StepperModel.h"
