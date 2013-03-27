@@ -62,11 +62,11 @@
                                // The zoom factor can be also manipulated by the propretiary code M402
 
 
-/* --------- */
+/* ------ xAxisStepper --- */
 
-StepperModel xAxisStepper(XAXIS_DIR_PIN, XAXIS_STEP_PIN, XAXIS_ENABLE_PIN, XAXIS_ENDSTOP_PIN,
-        XAXIS_MIN_STEPCOUNT, XAXIS_MAX_STEPCOUNT, 200.0, 16);
-StepperModel rotationStepper(YAXIS_DIR_PIN, YAXIS_STEP_PIN, YAXIS_ENABLE_PIN, YAXIS_ENDSTOP_PIN,
+StepperModel rotationStepper(XAXIS_DIR_PIN, XAXIS_STEP_PIN, XAXIS_ENABLE_PIN, XAXIS_ENDSTOP_PIN,
+        XAXIS_MIN_STEPCOUNT, XAXIS_MAX_STEPCOUNT, 400.0, 16);
+StepperModel xAxisStepper(YAXIS_DIR_PIN, YAXIS_STEP_PIN, YAXIS_ENABLE_PIN, YAXIS_ENDSTOP_PIN,
         YAXIS_MIN_STEPCOUNT, YAXIS_MAX_STEPCOUNT, 400.0, 16);
 
 SoftwareServo servo;
@@ -170,7 +170,7 @@ void commitSteppers(double speedrate)
   double distance = sqrt(deltaDistanceX*deltaDistanceX+deltaDistanceY*deltaDistanceY);
 		  	  
   // compute number of intervals for this move
-  double sub1 = (60000.* distance / speedrate);
+  double sub1 = (6000.* distance / speedrate);
   double sub2 = sub1 * 1000.;
   intervals = (long)sub2/TIMER_DELAY;
 
